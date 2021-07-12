@@ -25,9 +25,10 @@ Search results are limited to 30 total numbers max.
 
 
 
-## To be done... 
-I will add in support for user selection of scam type, SERP pagination, better regex, etc.
-
+## To do... 
+* I will add in support for user selection of scam type, SERP pagination, better regex, etc.
+* The google ping is pointless. I need to expand/ properly implementheader code detection.
+* Potential to add a basic spider?
 
 
 # Social
