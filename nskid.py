@@ -50,8 +50,9 @@ def ping_check():
 # Grab SERPs. Loop that mashed potato. 
 def grab_serps(choice):
 
-
-    query_domains = ['amazon+site:nomorobo.com&tbs=qdr:{choice}&sa=X', 'amazon+site:robokiller.com&tbs=qdr:{choice}&sa=X', 'amazon+site:who-called.co.uk&tbs=qdr:{choice}&sa=X' ]
+    query_domains = ['amazon+site:nomorobo.com&tbs=qdr:{choice}&sa=X', 
+                     'amazon+site:robokiller.com&tbs=qdr:{choice}&sa=X', 
+                     'amazon+site:who-called.co.uk&tbs=qdr:{choice}&sa=X' ]
 
     # Loop SERPs
     for x in query_domains:
@@ -60,7 +61,9 @@ def grab_serps(choice):
 
         # Too many responses
         if resp.status_code == 429:
-            message_sleep("Too many queries! \rPlease wait a moment or change IP (Windscribe) ;)", 5)
+            print("Too many queries! \rPlease wait a moment or change IP (Windscribe) ;)")
+            time.sleep(5)
+            exit
 
         # If 200 / OK
         elif resp.status_code == 200:
@@ -110,7 +113,7 @@ def main():
         # Option 4 - help menu
         if choice == "4":
             logo()
-            print(bcolors.GREEN + "Halp! https://mradamadvies.com")
+            print(bcolors.GREEN + "Halp! -> https://mradamadvies.com")
             second_menu()
             
         # Option 3 - past week
