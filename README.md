@@ -24,6 +24,11 @@ At the moment it only returns Amazon scammer phone numbers.
 Search results are limited to 30 total numbers max.
 
 
+# Licence
+You are free to do whatever you want with the data, as long as you give credits to the authors.
+
+(© mradamdavies.com | mradamdavies / 2021)
+
 
 ## To do... 
 * I will add in support for user selection of scam type, SERP pagination, better regex, etc.
