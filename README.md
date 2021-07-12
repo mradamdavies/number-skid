@@ -21,7 +21,7 @@ This is very much a work in progress.
 
 At the moment it only returns Amazon scammer phone numbers. 
 
-Search results are limited to 30 total numbers (10 numbers per domain).
+Search results are limited to 30 total numbers max.
 
 
 
