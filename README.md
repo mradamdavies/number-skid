@@ -29,6 +29,8 @@ You are free to do whatever you want with the data, as long as you give credits 
 
 
 ## Changelog
+1.04 - Fixed selecting wrong time frame
+
 1.03 - Fixed regex, removed Google pings
 
 1.02 - Added extra dorks
