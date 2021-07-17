@@ -29,10 +29,14 @@ You are free to do whatever you want with the data, as long as you give credits 
 
 
 ## Changelog
-1.00 - SERP scrape
-1.01 - Added header code detection
+1.03 - Fixed regex, removed Google pings
+
 1.02 - Added extra dorks
-1.03 - Fixed regex, removed Google pings.
+
+1.01 - Added header code detection
+
+1.00 - SERP scrape
+
 
 ## To Do
 * User selection of scam type
