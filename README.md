@@ -19,9 +19,7 @@ Just run:
 ## Notes
 This is very much a work in progress. 
 
-At the moment it only returns Amazon scammer phone numbers. 
-
-Search results are limited to 30 total numbers max.
+At the moment it only returns Amazon and Microsoft scammer phone numbers. s
 
 
 # Licence
@@ -30,10 +28,15 @@ You are free to do whatever you want with the data, as long as you give credits 
 (© mradamdavies.com | mradamdavies / 2021)
 
 
-## To do... 
-* I will add in support for user selection of scam type, SERP pagination, better regex, etc.
-* The google ping is pointless. I need to expand/ properly implementheader code detection.
-* Potential to add a basic spider?
+## Changelog
+1.00 - SERP scrape
+1.01 - Added header code detection
+1.02 - Added extra dorks
+1.03 - Fixed regex, removed Google pings.
+
+## To Do
+* User selection of scam type
+* SERP pagination
 
 
 # Social
