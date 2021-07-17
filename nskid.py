@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 author__ = "Mr. Adam Davies"
-copyright__ = "Copyleft 2021, mradamdavies"
+copyright__ = "Copyreft 2021, mradamdavies"
 license__ = "GPL"
-version__ = "1.0.3"
+version__ = "1.0.4"
 maintainer__ = "mradamdavies"
 email__ = "abeontech@gmail.com"
 
 import os
+import sys
 import time
 import requests
 import re
@@ -24,22 +25,40 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-
 # General Vars
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0"
-headers = {"user-agent": USER_AGENT}
+headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0"}
 hostname = "google.com"
 
 global counter
 
-# Grab SERPs. Loop. 
 def grab_serps(choice):
+    
+    # [Fix] Return correct time frame.
+    str_x = choice
+    str_y = '1'
+    str_z = '2'
+    str_a = '3'
+
+    if str_x == str_y: # If selected HOUR
+        choice = 'h'
+     
+    elif str_x == str_z: # If selected DAY
+        choice = 'd'
+     
+    elif str_x == str_a: # If selected WEEK
+        choice = 'w'
+     
+    else:
+        print ("Invalid Strings")
+    
+    query_domains = ['amazon+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X',
+                     'amazon+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X'
+                     'microsoft+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X', 
+                     'microsoft+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X'
+                     ]
+    
     counter = 0
-    query_domains = ['amazon+site:nomorobo.com&tbs=qdr:{choice}&sa=X', 
-                     'amazon+site:lookup.robokiller.com&tbs=qdr:{choice}&sa=X', 
-                     'microsoft+site:nomorobo.com&tbs=qdr:{choice}&sa=X', 
-                     'microsoft+site:lookup.robokiller.com&tbs=qdr:{choice}&sa=X']
+    
 
     # Loop SERPs
     for x in query_domains:
@@ -70,11 +89,11 @@ def grab_serps(choice):
             if counter == 1:
                 print (bcolors.ORANGE + "\r\n[ Amazon Scammers ]" + bcolors.ENDC)
             if counter == 3:
-                print (bcolors.ORANGE + "\r\n[ Microsoft Scammers ]" + bcolors.ENDC)
-            
+                print (bcolors.ORANGE + "\r\n[ Microsoft Scammers ]" + bcolors.ENDC)      
             
             soup = BeautifulSoup(resp.content, "html.parser")
             results = []
+            
             for g in soup.find_all('div', class_='g'):
                 
                 rc = g.find('div', class_='yuRUbf')
@@ -90,6 +109,8 @@ def grab_serps(choice):
                 except:
                     x = "Blank result"
                 print(x)
+                # print(x + " |-----> " + title) #debug
+                
 
                 
         # Epic Fail!
@@ -103,11 +124,11 @@ def main():
     while choice =="0":
         
         if choice == 1:
-            choice == "h"
+            return ("h")
         elif choice == 2:
-            choice == "d"
+            return ("d")
         elif choice == 3:
-            choice == "w"
+            return ("w")
             
         print("1) Grab numbers: last HOUR")
         print("2) Grab numbers: last DAY")
@@ -138,6 +159,12 @@ def main():
             print("Grabbing phone numbers from the past hour...")
             time.sleep(1)
             grab_serps(choice)
+            
+        elif choice == "x" : # Exit
+            logo()
+            print("Closing...")
+            time.sleep(2)
+            sys.exit()
                         
         # Fallback menu
         else:
@@ -159,9 +186,9 @@ def logo():
     print(bcolors.GREEN + "░░░░░░░░░░░░░░░░░▒░░░░░░░░░░░░░▒▒▒░░░░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░░░█▒░▒█▓▒░░░░░░░▒▓█▓░░░░▒▒▒░░░░░░░▒▓▓▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░▒░░░▒█▓░▓▒░▓▓▓▒▒███▓▒░░▒▓▒░▒▓▒░░░▒▒░░░░░░▒▒▒░░░▒▒▒░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░▓▒░░██▓░██▒░▒████▓▓▒░▒▒░▓█▒░░▒▓▓░░░░░░░░▒▒▓▒▒▒░░░░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░▓██▒░▒░░█▒░░▒▓█▒░░░▒░▓█▓░░▓██▓░░░░░░█▓░░░░░░█▓░▓████▓▒░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░░▓█░░░░▒██▒░▒▓██░░░░▓██░░███░░▒▒▒▒▓█░░░░░▓░░░▓▒░░░░░▒▒▒░░░▒█░░▓▓░░░ \r\n░░░░░░░░░░░░░░▒█▒▒██████▓░░░░░░░█▓░▒███▒░░░▒█████▓▓▓██▓░░▒░▓█▓▒░░░░░▒░░█▒▒█▒█░░ \r\n░░░░░░░░░░░░░░░░██████████░░░░░░░░▓███▓░░░░░░▒▒▓▓▓▓▓▒░▒░▓▒░▒░░░░░░░▒█░░▓██▓▒█▓░ \r\n░░░░░░░░░░░░░░░░░█████▓▒██░░░░░░░░░███▒▓████▓▒░▒▓▓▓▓▓▓▒██░██▓▒░░░░░▒██████░░▓█▒ \r\n░░░░░░░░░░░░░░░██████▒░░█▓░░░░░░░░░░▒███████████▓▒░░█▓█▓░░░▓███▓▒░░▓█░░▓██░░▒██ \r\n░░░░░░░░░░░░░░░░████▒░░░█▓░░░░░░░░░░░░░░▓█████████▒▒░░░░░░░░▒█████▒██░░▒█▓░░░▓▒ \r\n░░░░░░░░░░░░░░▓█████░░░░█▒░░░░░░░░░░░░░░░███▓░░░░▒▒▒░░░░░░░░░▒████▓█▓░▓░██░░░░░ \r\n░░░░░░░░░░░░▒░░█████░░░░▓▒░░░░░░░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▓██▓▓░▒░░░░░░░░ \r\n░▒██░░░░▒░░░▓░░▒████░░░░▒▒░░░▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒███░░░▓░█░░░░░░░░ \r\n░▓██░░░░█▒░░▓▓▓█████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██▓░▒░▓▒▒█▓░░░░░░ \r\n░██▓░░░▓█░░░▒████████░░░░░░░░░░░▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░▒█▓░░▓▒▓░░░░░░░░░░ \r\n░██▓░░░██░░░░████████▒░░░░░░░▒▒▒▒▒▒▒░░▒▒▒▒▒░░░░░░░░░░░░░░░░░░░▓░░░▒▓░▓░░░░░░░░░ \r\n▒██▓▒▒▒█▓░░░▓█▒▓██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▒██▒░░░░░░░ \r\n▒██▓▓▓██░░░░█▓░░█▒░▓▓▒▒░░░░▒██▓▓▒░░░░░░░░░░░░░░░░░▒▒▒▒▒░░░░░░░░░░░░░░▓▒▓▒▒░░░░░ \r\n▓█▓░░░██░░░▓█▓▒░▒░░░█░░░░░░▓██████▓▓▓░░▒▒░░░░█▓░████████▓▓▒░░░░░░░░░░░░░░░░░░░░ \r\n██▒░░▒█▓░░░█▓▓▓██▓░░▒▓▒░░░▓███▓░▒▓▒░▒▓██▒░░░▓██▓▒▓▓▒▒███▓▒░░░░░▒█░░▒░░░░░░░░░░░ \r\n██░░░▓█▒░░▓█░░░░▓█░░░░▓░░░░▓▓████████████▓▒░██████████▓░░░░░░░███░░░▒▒▒▒░░░░░░░ \r\n░▒░░░██░░░██░░░░░█▒░░░▒░░░░░░░░▒▒▒▒███▓▓▓░░░▒█▒▓████▓▒░░░░░░░░██▓░░░░░░░░░░░░░░ \r\n░░░░░▒▒░░▒█▓░░░░░▒▓░░░░░░░░░░░░░░▒▒▒░░░▒░░░░░░▒░░░░░░░░░░░░▒░░▓░░░░░░▓▒░░░░░░░░ \r\n░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█▒░▓░░░░░▒▒█░░░░░░░░ \r\n░░░░░░░░░▓▓░░░░██▒░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒░░░░░▒▒▒░░▓░░▒░░▓▒▒█░░░░░░░ \r\n░░░░░░░░░▓█░░░░██▓░▒█░░█░░░░░░░░░░░░░▓█░░░░░░░░░░░░░▒▓█▓▓▓░░▒█░░░█░░▓▓░█▒░░░░░░ \r\n░░░░░░░░░▓█░░░░▓█▓▒█▒▒▓██▒░░░░░░▒░░░░░░▒▒░░▒▒█▓░░░░░░░░█▓░░▓▒█▒░░█▓░█▒░▓█░░░░░░ \r\n░░░░░░░░░▒█▓▓████▓██░░░░▓█▓░░░░█▒░░░░░░░░░░░░░░░░▒█████▒░░▓░░█▓▓▓██░░░░░░░░░░░░ \r\n░░░░░░░░░▒█▓░░░▓███░░░░░░██▓▒░░██▒▒▒▒▒▒▒▒▒▒▒▒▓████▓▓░░░░▓▒░░░▓█▒▒▒█░░░░░░░░░░░░ \r\n░░░░░░░░░░█▓░░░▒██▒░░░░░░▒█▒▒█▒░░▒▒▒▓███████████▒░░░░░▒▒░░░░░▓█▒░░█▒░░░░░░░░░░░ \r\n░░░░░░░░░░█▓░░░░█▓░░░░░░░░░░░░▒█▒░░░░░▒▓▓███▓▒░░░░░░▒▒░░░░░░░▒█▒░░░▓░░░░░░░░░░░ \r\n░░░░░░░░░░█▓░░░░▓░░░░░░░░░░░░░░░▒▓▒░░░░░░░░░░░░░░░▒▒░░░░░░░░░░█▒░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░▓▒░░░░░░░░░░░░░░░░░░░░░░░▓▒░░░░░░░░░░░▒▒░░░░░░░░░░░░▒░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░░▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" + bcolors.ENDC)
     print(bcolors.ORANGE + "                        [ Number Skid ]-[ by mradamdavies ] \r\n                             The scammer number grabber!" + bcolors.ENDC)
 
-# Info Menu
+# Help Menu
 def second_menu():
-    print("This will scrape a few Google SERPs for scammers phone numbers. \r\nNumbers provided by Nomorobo and Robokiller, thanks guys. \r\nPlease check you're talking to a real scammer! \r\n")
+    print("This will scrape a few Google SERPs for scammers phone numbers. \r\nStart with numbers from the past day! \r\nNumbers provided by Nomorobo and Robokiller, thanks guys. \r\nPlease check you're talking to a real scammer! \r\n")
     main()
 
 # Do stuff
