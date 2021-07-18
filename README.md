@@ -1,7 +1,7 @@
 # Number Skid
 Scammer phone number grabber
 
-I made this crappy little Python script to scrape phone numbers from Google. It needs a a lot of work, but I made it quickly to save copy/pasta while scam baiting.
+I made this little Python script to scrape phone numbers from Google. It needs a a lot of work, but I made it quickly to save copy/pasta while scam baiting.
 
 I'm using it to scam bait tech support scammers. I will update this repo when I get time. 
 
