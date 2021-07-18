@@ -3,7 +3,7 @@
 author__ = "Mr. Adam Davies"
 copyright__ = "Copyreft 2021, mradamdavies"
 license__ = "GPL"
-version__ = "1.0.4"
+version__ = "1.0.5"
 maintainer__ = "mradamdavies"
 email__ = "abeontech@gmail.com"
 
@@ -32,13 +32,14 @@ hostname = "google.com"
 global counter
 
 def grab_serps(choice):
-    
+    '''
     # [Fix] Return correct time frame.
     str_x = choice
     str_y = '1'
     str_z = '2'
     str_a = '3'
-
+    '''
+    '''
     if str_x == str_y: # If selected HOUR
         choice = 'h'
      
@@ -50,15 +51,13 @@ def grab_serps(choice):
      
     else:
         print ("Invalid Strings")
-    
+    '''
+    counter = 0
     query_domains = ['amazon+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X',
                      'amazon+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X'
                      'microsoft+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X', 
                      'microsoft+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X'
                      ]
-    
-    counter = 0
-    
 
     # Loop SERPs
     for x in query_domains:
@@ -83,7 +82,6 @@ def grab_serps(choice):
         # 200 / OK
         elif resp.status_code == 200:
             
-            #  print scam type
             counter = counter + 1
             
             if counter == 1:
@@ -115,21 +113,22 @@ def grab_serps(choice):
                 
         # Epic Fail!
         else:
-            print("Fail Error. \r\nCheck your internet connection!")
+            print(bcolors.ORANGE + "Fatal Error!" + bcolors.ENDC)
+            print(" * Check your internet connection! \r\n * Check your can access robokiller.com")
     ###########// End SERP Loop
 
 # Do Menu Stuff
 def main():
     choice = "0"
     while choice =="0":
-        
+        '''
         if choice == 1:
             return ("h")
         elif choice == 2:
             return ("d")
         elif choice == 3:
             return ("w")
-            
+        '''
         print("1) Grab numbers: last HOUR")
         print("2) Grab numbers: last DAY")
         print("3) Grab numbers: last WEEK")
@@ -146,19 +145,19 @@ def main():
             logo()
             print("Grabbing phone numbers from the past week...")
             time.sleep(1)
-            grab_serps(choice)
+            grab_serps("w")
             
         elif choice == "2": # Option 2 - past day
             logo()
             print("Grabbing phone numbers from the past day...")
             time.sleep(1)
-            grab_serps(choice)
+            grab_serps("d")
             
         elif choice == "1" : # Option 1 - past hour
             logo()
             print("Grabbing phone numbers from the past hour...")
             time.sleep(1)
-            grab_serps(choice)
+            grab_serps("h")
             
         elif choice == "x" : # Exit
             logo()
@@ -188,7 +187,9 @@ def logo():
 
 # Help Menu
 def second_menu():
-    print("This will scrape a few Google SERPs for scammers phone numbers. \r\nStart with numbers from the past day! \r\nNumbers provided by Nomorobo and Robokiller, thanks guys. \r\nPlease check you're talking to a real scammer! \r\n")
+    print("This will scrape a few Google SERPs for scammers phone numbers.")
+    print(bcolors.BOLD + "Start with numbers from the past day!" + bcolors.ENDC + " (Option 2)")
+    print("Numbers provided by Nomorobo and Robokiller, thanks guys. \r\nPlease check you're talking to a real scammer! \r\n")
     main()
 
 # Do stuff
