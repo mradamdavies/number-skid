@@ -26,7 +26,7 @@ At the moment it only returns Amazon and Microsoft scammer phone numbers. s
 
 ## Changelog
 * 1.05 - Minor bug fixes
-* 1.04 - Fixed selecting wrong time frame
+* 1.04 - Fixed incorrect SERP time frame
 * 1.03 - Fixed regex, removed Google pings
 * 1.02 - Added extra dorks
 * .01 - Added header code detection
