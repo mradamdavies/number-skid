@@ -32,29 +32,10 @@ hostname = "google.com"
 global counter
 
 def grab_serps(choice):
-    '''
-    # [Fix] Return correct time frame.
-    str_x = choice
-    str_y = '1'
-    str_z = '2'
-    str_a = '3'
-    '''
-    '''
-    if str_x == str_y: # If selected HOUR
-        choice = 'h'
-     
-    elif str_x == str_z: # If selected DAY
-        choice = 'd'
-     
-    elif str_x == str_a: # If selected WEEK
-        choice = 'w'
-     
-    else:
-        print ("Invalid Strings")
-    '''
+
     counter = 0
     query_domains = ['amazon+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X',
-                     'amazon+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X'
+                     'amazon+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X',
                      'microsoft+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X', 
                      'microsoft+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X'
                      ]
@@ -121,14 +102,7 @@ def grab_serps(choice):
 def main():
     choice = "0"
     while choice =="0":
-        '''
-        if choice == 1:
-            return ("h")
-        elif choice == 2:
-            return ("d")
-        elif choice == 3:
-            return ("w")
-        '''
+
         print("1) Grab numbers: last HOUR")
         print("2) Grab numbers: last DAY")
         print("3) Grab numbers: last WEEK")
