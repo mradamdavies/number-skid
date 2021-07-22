@@ -44,6 +44,6 @@ You are free to do whatever you want with the data, as long as you give credits 
 (© mradamdavies.com | mradamdavies / 2021)
 
 # Social
-[Hackersploit Discord Server](https://discord.gg/hackersploit)
+[Hackersploit Discord](https://discord.gg/hackersploit)
 
-[Twitter](https://twitter.com/mradamdavies)
+[My Twitter](https://twitter.com/mradamdavies)
