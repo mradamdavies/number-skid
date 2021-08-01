@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 author__ = "Mr. Adam Davies"
-copyright__ = "Copyreft 2021, mradamdavies"
+copyright__ = "Copyright 2021, mradamdavies"
 license__ = "GPL"
-version__ = "1.0.5"
+version__ = "1.0.6"
 maintainer__ = "mradamdavies"
 email__ = "abeontech@gmail.com"
 
@@ -16,24 +16,25 @@ from bs4 import BeautifulSoup
 
 # Colours for menu stuff
 class bcolors:
-    HEADER = '\033[95m'
-    BLUE = '\033[94m'
-    CYAN = '\033[96m'
     GREEN = '\033[92m'
     ORANGE = '\033[93m'
-    FAIL = '\033[91m'
+    FAIL = '\033[31m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    
 # General Vars
 headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0"}
 hostname = "google.com"
 
-global counter
 
 def grab_serps(choice):
 
-    counter = 0
+    # Vars
+    counter = 0     # Titles
+    nullresult = 0  # No results msg
+    nores_msg = 50  # Try again msg
+    
+        
     query_domains = ['amazon+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X',
                      'amazon+site:lookup.robokiller.com&tbs=qdr:'+choice+'&sa=X',
                      'microsoft+site:nomorobo.com&tbs=qdr:'+choice+'&sa=X', 
@@ -42,39 +43,47 @@ def grab_serps(choice):
 
     # Loop SERPs
     for x in query_domains:
-
         dork = f"https://google.com/search?q={x}"
         resp = requests.get(dork, headers=headers)
 
+
         # Too many responses
         if resp.status_code == 429:
-            print(bcolors.FAIL + "Too many queries!" + bcolors.ENDC)
-            print("* Wait a moment \r\n* Or change IP.")
+            print(bcolors.ORANGE + "\r\n[ Too many queries! ]" + bcolors.ENDC)
+            print("  * Wait a moment \r\n  * Or change IP")
+            nores_msg = 20
             time.sleep(5)
             exit
 
+
         # 404 / Page Not Found
         elif resp.status_code == 404:
-            print(bcolors.FAIL + "Page not found!" + bcolors.ENDC)
-            print("* Check internet connection \r\n* Check query_domains")
+            print(bcolors.ORANGE + "\r\n[ Page not found! ]" + bcolors.ENDC)
+            print("  * Check internet connection \r\n  * Check query_domains")
             time.sleep(5)
             exit
+            
             
         # 200 / OK
         elif resp.status_code == 200:
             
-            counter = counter + 1
             
+            # Show Titles
+            counter = counter + 1
             if counter == 1:
                 print (bcolors.ORANGE + "\r\n[ Amazon Scammers ]" + bcolors.ENDC)
             if counter == 3:
                 print (bcolors.ORANGE + "\r\n[ Microsoft Scammers ]" + bcolors.ENDC)      
             
+            
+            # Loop SERPs
             soup = BeautifulSoup(resp.content, "html.parser")
             results = []
-            
+
             for g in soup.find_all('div', class_='g'):
                 
+                
+                # Loop result
                 rc = g.find('div', class_='yuRUbf')
                 anchor = rc.find('a')
                 title = anchor.find('h3').text
@@ -82,27 +91,44 @@ def grab_serps(choice):
                 results.append(item)
 
 
-                # Check for blanks
+                # Regex results output
                 try:
                     x = re.search("(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})", title). group(0)
+                    nullresult = 3
+                    nores_msg = 1
                 except:
-                    x = "Blank result"
+                    x = "Error"
                 print(x)
-                # print(x + " |-----> " + title) #debug
                 
-
+                
+            # Empty SERP check
+            if nullresult == 3:
+                pass
+                
+            else:
+                print('  * No results')
+            
                 
         # Epic Fail!
         else:
-            print(bcolors.ORANGE + "Fatal Error!" + bcolors.ENDC)
-            print(" * Check your internet connection! \r\n * Check your can access robokiller.com")
+            print(bcolors.ORANGE + "[ Fatal Error! ]" + bcolors.ENDC)
+            print("  * Check your internet connection! \r\n  * Check you can access robokiller.com")
+    
     ###########// End SERP Loop
+
+
+    # Error Messages
+    if nores_msg == 50:
+        print(bcolors.BOLD + '\r\n  > Please try a longer time frame.' + bcolors.ENDC)
+    
+    elif nores_msg == 20:
+        print(bcolors.BOLD + '\r\n  > Please use a VPN or wait a while.' + bcolors.ENDC)
+        
 
 # Do Menu Stuff
 def main():
     choice = "0"
     while choice =="0":
-
         print("1) Grab numbers: last HOUR")
         print("2) Grab numbers: last DAY")
         print("3) Grab numbers: last WEEK")
@@ -112,7 +138,7 @@ def main():
 
         if choice == "4": # Option 4 - help menu
             logo()
-            print(bcolors.GREEN + "Submit your suggestions -> https://github.com/mradamdavies/number-skid" + bcolors.ENDC)
+            print(bcolors.GREEN + "Submit your suggestions -> https://github.com/mradamdavies/number-skid\r\n" + bcolors.ENDC)
             second_menu()
             
         elif choice == "3": # Option 3 - past week
@@ -157,7 +183,7 @@ def screen_clear():
 def logo():
     screen_clear()
     print(bcolors.GREEN + "░░░░░░░░░░░░░░░░░▒░░░░░░░░░░░░░▒▒▒░░░░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░░░█▒░▒█▓▒░░░░░░░▒▓█▓░░░░▒▒▒░░░░░░░▒▓▓▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░▒░░░▒█▓░▓▒░▓▓▓▒▒███▓▒░░▒▓▒░▒▓▒░░░▒▒░░░░░░▒▒▒░░░▒▒▒░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░▓▒░░██▓░██▒░▒████▓▓▒░▒▒░▓█▒░░▒▓▓░░░░░░░░▒▒▓▒▒▒░░░░░░░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░▓██▒░▒░░█▒░░▒▓█▒░░░▒░▓█▓░░▓██▓░░░░░░█▓░░░░░░█▓░▓████▓▒░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░░▓█░░░░▒██▒░▒▓██░░░░▓██░░███░░▒▒▒▒▓█░░░░░▓░░░▓▒░░░░░▒▒▒░░░▒█░░▓▓░░░ \r\n░░░░░░░░░░░░░░▒█▒▒██████▓░░░░░░░█▓░▒███▒░░░▒█████▓▓▓██▓░░▒░▓█▓▒░░░░░▒░░█▒▒█▒█░░ \r\n░░░░░░░░░░░░░░░░██████████░░░░░░░░▓███▓░░░░░░▒▒▓▓▓▓▓▒░▒░▓▒░▒░░░░░░░▒█░░▓██▓▒█▓░ \r\n░░░░░░░░░░░░░░░░░█████▓▒██░░░░░░░░░███▒▓████▓▒░▒▓▓▓▓▓▓▒██░██▓▒░░░░░▒██████░░▓█▒ \r\n░░░░░░░░░░░░░░░██████▒░░█▓░░░░░░░░░░▒███████████▓▒░░█▓█▓░░░▓███▓▒░░▓█░░▓██░░▒██ \r\n░░░░░░░░░░░░░░░░████▒░░░█▓░░░░░░░░░░░░░░▓█████████▒▒░░░░░░░░▒█████▒██░░▒█▓░░░▓▒ \r\n░░░░░░░░░░░░░░▓█████░░░░█▒░░░░░░░░░░░░░░░███▓░░░░▒▒▒░░░░░░░░░▒████▓█▓░▓░██░░░░░ \r\n░░░░░░░░░░░░▒░░█████░░░░▓▒░░░░░░░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▓██▓▓░▒░░░░░░░░ \r\n░▒██░░░░▒░░░▓░░▒████░░░░▒▒░░░▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒███░░░▓░█░░░░░░░░ \r\n░▓██░░░░█▒░░▓▓▓█████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██▓░▒░▓▒▒█▓░░░░░░ \r\n░██▓░░░▓█░░░▒████████░░░░░░░░░░░▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░▒█▓░░▓▒▓░░░░░░░░░░ \r\n░██▓░░░██░░░░████████▒░░░░░░░▒▒▒▒▒▒▒░░▒▒▒▒▒░░░░░░░░░░░░░░░░░░░▓░░░▒▓░▓░░░░░░░░░ \r\n▒██▓▒▒▒█▓░░░▓█▒▓██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▒██▒░░░░░░░ \r\n▒██▓▓▓██░░░░█▓░░█▒░▓▓▒▒░░░░▒██▓▓▒░░░░░░░░░░░░░░░░░▒▒▒▒▒░░░░░░░░░░░░░░▓▒▓▒▒░░░░░ \r\n▓█▓░░░██░░░▓█▓▒░▒░░░█░░░░░░▓██████▓▓▓░░▒▒░░░░█▓░████████▓▓▒░░░░░░░░░░░░░░░░░░░░ \r\n██▒░░▒█▓░░░█▓▓▓██▓░░▒▓▒░░░▓███▓░▒▓▒░▒▓██▒░░░▓██▓▒▓▓▒▒███▓▒░░░░░▒█░░▒░░░░░░░░░░░ \r\n██░░░▓█▒░░▓█░░░░▓█░░░░▓░░░░▓▓████████████▓▒░██████████▓░░░░░░░███░░░▒▒▒▒░░░░░░░ \r\n░▒░░░██░░░██░░░░░█▒░░░▒░░░░░░░░▒▒▒▒███▓▓▓░░░▒█▒▓████▓▒░░░░░░░░██▓░░░░░░░░░░░░░░ \r\n░░░░░▒▒░░▒█▓░░░░░▒▓░░░░░░░░░░░░░░▒▒▒░░░▒░░░░░░▒░░░░░░░░░░░░▒░░▓░░░░░░▓▒░░░░░░░░ \r\n░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░█▒░▓░░░░░▒▒█░░░░░░░░ \r\n░░░░░░░░░▓▓░░░░██▒░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒░░░░░▒▒▒░░▓░░▒░░▓▒▒█░░░░░░░ \r\n░░░░░░░░░▓█░░░░██▓░▒█░░█░░░░░░░░░░░░░▓█░░░░░░░░░░░░░▒▓█▓▓▓░░▒█░░░█░░▓▓░█▒░░░░░░ \r\n░░░░░░░░░▓█░░░░▓█▓▒█▒▒▓██▒░░░░░░▒░░░░░░▒▒░░▒▒█▓░░░░░░░░█▓░░▓▒█▒░░█▓░█▒░▓█░░░░░░ \r\n░░░░░░░░░▒█▓▓████▓██░░░░▓█▓░░░░█▒░░░░░░░░░░░░░░░░▒█████▒░░▓░░█▓▓▓██░░░░░░░░░░░░ \r\n░░░░░░░░░▒█▓░░░▓███░░░░░░██▓▒░░██▒▒▒▒▒▒▒▒▒▒▒▒▓████▓▓░░░░▓▒░░░▓█▒▒▒█░░░░░░░░░░░░ \r\n░░░░░░░░░░█▓░░░▒██▒░░░░░░▒█▒▒█▒░░▒▒▒▓███████████▒░░░░░▒▒░░░░░▓█▒░░█▒░░░░░░░░░░░ \r\n░░░░░░░░░░█▓░░░░█▓░░░░░░░░░░░░▒█▒░░░░░▒▓▓███▓▒░░░░░░▒▒░░░░░░░▒█▒░░░▓░░░░░░░░░░░ \r\n░░░░░░░░░░█▓░░░░▓░░░░░░░░░░░░░░░▒▓▒░░░░░░░░░░░░░░░▒▒░░░░░░░░░░█▒░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░▓▒░░░░░░░░░░░░░░░░░░░░░░░▓▒░░░░░░░░░░░▒▒░░░░░░░░░░░░▒░░░░░░░░░░░░░░░░ \r\n░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒░░░▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" + bcolors.ENDC)
-    print(bcolors.ORANGE + "                        [ Number Skid ]-[ by mradamdavies ] \r\n                             The scammer number grabber!" + bcolors.ENDC)
+    print(bcolors.ORANGE + "                        [ Number Skid ]-[ by mradamdavies ] \r\n                             The scammer number grabber!\r\n" + bcolors.ENDC)
 
 # Help Menu
 def second_menu():
