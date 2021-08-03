@@ -18,7 +18,8 @@ Just run:
 ## Notes
 This is very much a work in progress. 
 
-At the moment it only returns Amazon and Microsoft scammer phone numbers. s
+At the moment it only returns Amazon and Microsoft scammer phone numbers.
+This has just been made into a Discord bot, which is available here: https://discord.gg/nvaUnnub
 
 
 
