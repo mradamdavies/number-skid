@@ -15,13 +15,14 @@ Just run:
 
 
 
+![nSkid Scambait tool](https://abeontech.com/wp-content/uploads/2021/07/nskid-scambaiter-tool.png)
+
+
+
 ## Notes
 This is very much a work in progress. 
 
 At the moment it only returns Amazon and Microsoft scammer phone numbers.
-This has just been made into a Discord bot, which is available here: https://discord.gg/nvaUnnub
-
-
 
 
 
@@ -46,6 +47,8 @@ You are free to do whatever you want with the data, as long as you give credits 
 (© mradamdavies.com | mradamdavies / 2021)
 
 # Social
+[Abeon Discord - with nSkid bot](https://discord.gg/nvaUnnub)
+
 [Hackersploit Discord](https://discord.gg/hackersploit)
 
 [My Twitter](https://twitter.com/mradamdavies)
