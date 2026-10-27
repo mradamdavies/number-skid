@@ -49,6 +49,4 @@ You are free to do whatever you want with the data, as long as you give credits 
 # Social
 [Abeon Discord - with nSkid bot](https://discord.gg/3q6uwWAJTK)
 
-[Hackersploit Discord](https://discord.gg/3AJRMArFgP)
-
 [My Twitter](https://twitter.com/mradamdavies)
